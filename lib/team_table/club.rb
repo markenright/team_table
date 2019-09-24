@@ -12,17 +12,12 @@ class TeamTable::Club
         @drawn = drawn
         @points = @won.to_i*3 + @drawn.to_i*1
         @@all << self
-
     end
-
-    
 
     def self.table_builder(data_array)
         data_array.each do |index|
             self.new(index[0], index[1], index[2][0], index[2][1], index[2][2])
-
         end
-        
     end 
 
     def self.all
