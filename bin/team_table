@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require_relative '../lib/team_table'
+
+
+TeamTable::CLI.new.call
