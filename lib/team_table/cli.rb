@@ -4,9 +4,7 @@ class TeamTable::CLI
    
 
     def initialize
-        teams = TeamTable::Scraper.new
-        teams_arr = teams.get_locations
-        exit!
+        
     end
 
 
@@ -67,7 +65,7 @@ class TeamTable::CLI
         club = TeamTable::Club.find_club_by_index(position)
         puts
         puts "#{club.name} has won #{club.won} of #{club.games_played} matches and has #{club.points} points in total."
-        puts
+        puts "#{club.name} has scored #{club.goals_for} and conceded #{club.goals_against} for a goal difference of #{club.difference}"
         menu
     end
    
