@@ -4,7 +4,9 @@ class TeamTable::CLI
    
 
     def initialize
-        
+        teams = TeamTable::Scraper.new
+        teams_arr = teams.get_locations
+        exit!
     end
 
 

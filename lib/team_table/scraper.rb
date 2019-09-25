@@ -10,32 +10,51 @@ class TeamTable::Scraper
 
     def get_locations
         doc = Nokogiri::HTML(open("https://www.espn.com/soccer/table/_/league/eng.1"))
-        club_data = doc.css(".Table2__tr.Table2__tr--sm.Table2__even")
-        
+        clubs_names = doc.css(".Table.Table--align-right.Table--fixed.Table--fixed-left")
+       
+      
+        @club_names_arr = []
+        clubs_names.css(".hide-mobile").each do |club|
+            @club_names_arr << club.text
+            
+        end
+       
+      # p @club_names_arr
 
-        @club_data_arr = []
-        club_data.each do |club|
-         if club.css(".hide-mobile").text != ""
-            @club_data_arr << club.css(".hide-mobile").text
-         end
-        end
+       club_data = doc.css(".Table__TR.Table__TR--sm.Table__even").css(".stat-cell")
+       #p club_data.length
+
+       # goes in order: games played, won, drawn, lost, goals for, goals against, goal difference, points
+       # 8 stats.  
+       
+       @club_data_arr = []
+       club_data.each do |club|
+        @club_data_arr.append(club.text)
         
-        @scores_data_arr = []
-        club_data.each do |club|
-            if club.css(".stat-cell").text != ""
-            @scores_data_arr << club.text
-            end
-        end
+        
+       end
+       @club_data_arr = @club_data_arr.each_slice(8).to_a
+       #p @club_data_arr
         
         @data_aggregate = []
+        #iterate over 20 teams, then 8 spots in club_data for each team
         counter = 0
-        while (counter < 20)
-            @data_aggregate << [counter + 1, @club_data_arr[counter], @scores_data_arr[counter]]
+        while counter < 20
+            @data_aggregate << [@club_names_arr[counter], @club_data_arr[counter]]
             counter += 1
         end
-
         @data_aggregate
-     end
+       
+       
+       
+    end 
+       
+       
+       
+       
+       
+       
+     
     def return_data
         @data_aggregate
     end
