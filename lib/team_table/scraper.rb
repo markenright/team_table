@@ -24,12 +24,12 @@ class TeamTable::Scraper
        # goes in order: games played, won, drawn, lost, goals for, goals against, goal difference, points
        # 8 stats.  
        
-       @club_data_arr = []
-       club_data.each do |club|
-        @club_data_arr.append(club.text)
+       
+       @club_data_arr = club_data.map do |club|
+        club.text
         
+        end
         
-       end
        @club_data_arr = @club_data_arr.each_slice(8).to_a
        
         

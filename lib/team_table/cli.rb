@@ -10,11 +10,16 @@ class TeamTable::CLI
 
     def call
         puts "Hello and welcome to the Premier League, England's top soccer level!"
-        
+        teams = TeamTable::Scraper.new
+        teams_arr = teams.get_locations
+      
+        TeamTable::Club.table_builder(teams_arr)
+        @all_teams = TeamTable::Club.all
         menu
     end
 
     def menu
+        
         puts "Type league to see the current league standings.  Type quit to leave or help for more info"
         while true
             input = gets.strip
@@ -35,12 +40,8 @@ class TeamTable::CLI
     def table_output
         puts "The current standings in the Premier League:"
         puts 
-        teams = TeamTable::Scraper.new
-        teams_arr = teams.get_locations
-      
-        TeamTable::Club.table_builder(teams_arr)
-        all_teams = TeamTable::Club.all
-        all_teams.each do |team|
+        
+        @all_teams.each do |team|
             puts "#{team.position} : #{team.name}"
         end
         
@@ -49,7 +50,7 @@ class TeamTable::CLI
         input = gets.strip
         input = input.to_i
 
-        if input.between?(1, 20)
+        if (1..20).include?(input)
             more_info(input)
             
         else

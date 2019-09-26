@@ -23,6 +23,7 @@ class TeamTable::Club
 
             self.new(club[0], club[1], club[2][0], club[2][1], club[2][2], club[2][3], club[2][4], club[2][5], club[2][6], club[2][7])
        end
+       
     end 
 
     def self.all
@@ -30,13 +31,8 @@ class TeamTable::Club
     end
 
     def self.find_club_by_index(pos)
-        found_club = nil
-        @@all.each do |club|
-            if club.position == pos
-                found_club = club
-            end
-        end
-        found_club
+       
+        @@all[pos-1]
                     
                 
     end
